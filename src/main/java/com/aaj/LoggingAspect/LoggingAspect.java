@@ -1,37 +1,46 @@
 package com.aaj.LoggingAspect;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Slf4j
 public class LoggingAspect {
 
-    @Around("execution(* com.aaj.Controller.LoggingController.*(..))")
-    public Object logControllerMethods(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Before("execution(* com.aaj.Controller.CarController.*(..))")
+    public void logCarControllerMethods(JoinPoint joinPoint) {
+        logCarMethodExecution(joinPoint);
+    }
+
+    @Before("execution(* com.aaj.Controller.TruckController.*(..))")
+    public void logTruckControllerMethods(JoinPoint joinPoint) {
+        logTruckMethodExecution(joinPoint);
+    }
+
+    @Before("execution(* com.aaj.Controller.MicroMobilityController.*(..))")
+    public void logMicroMobilityControllerMethods(JoinPoint joinPoint) {
+        logMicroMethodExecution(joinPoint);
+    }
+
+    private void logCarMethodExecution(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
+        log.info("Executing method " + methodName + " with arguments: " + java.util.Arrays.toString(args));
+    }
 
-        // Log before method execution
-        System.out.println("Executing method " + methodName + " with arguments: " + java.util.Arrays.toString(args));
+    private void logTruckMethodExecution(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        Object[] args = joinPoint.getArgs();
+        log.info("Executing method " + methodName + " with arguments: " + java.util.Arrays.toString(args));
+    }
 
-        // Proceed with the original method invocation
-        Object result;
-        try {
-            result = joinPoint.proceed();
-        } catch (Throwable e) {
-            // Log exception if any and rethrow
-            System.out.println("Method " + methodName + " has thrown an exception: " + e.getMessage());
-            throw e;
-        }
-
-        // Log after method execution
-        System.out.println("Method " + methodName + " returned: " + result);
-
-        return result;
+    private void logMicroMethodExecution(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        Object[] args = joinPoint.getArgs();
+        log.info("Executing method " + methodName + " with arguments: " + java.util.Arrays.toString(args));
     }
 }
