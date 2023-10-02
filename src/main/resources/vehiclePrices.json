@@ -1,0 +1,34 @@
+{
+  "Car": {
+    "lamborghini": 200000,
+    "mazda": 30000,
+    "bugatti": 3000000,
+    "ferrari": 250000,
+    "porsche": 100000,
+    "audi": 50000,
+    "mercedes": 60000,
+    "bmw": 55000,
+    "tesla": 75000,
+    "rollsRoyce": 350000
+  },
+  "MicroMobility": {
+    "bicycle": 500,
+    "scooter": 300,
+    "skateboard": 200,
+    "rollerblades": 150,
+    "unicycle": 250,
+    "hoverboard": 400
+  },
+  "Truck": {
+    "pickup": 40000,
+    "semitruck": 120000,
+    "boxtruck": 50000,
+    "dumptruck": 75000,
+    "firetruck": 300000,
+    "garbagetruck": 200000,
+    "tanker": 100000,
+    "towtruck": 50000,
+    "refrigerated": 60000,
+    "flatbed": 70000
+  }
+}

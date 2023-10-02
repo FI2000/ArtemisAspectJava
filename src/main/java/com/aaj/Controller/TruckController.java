@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/truck") // optional base route
+@RequestMapping("/api/trucks") // optional base route
 public class TruckController {
 
     @GetMapping("/pickup")
