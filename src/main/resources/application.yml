@@ -14,3 +14,6 @@ spring:
     port: 61616
     user: artemisUser
     password: artemisPassword
+  graphql:
+    graphiql:
+      enabled: true

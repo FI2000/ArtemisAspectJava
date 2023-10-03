@@ -1,0 +1,14 @@
+type VehicleLog {
+    id: ID!
+    vehicleType: String!
+    brand: String!
+    purchaseDate: String!
+    purchasePrice: Float!
+}
+
+type Query {
+    findAllVehicleLogs: [VehicleLog]
+    findVehicleLogsByVehicleType(vehicleType: String!): [VehicleLog]
+    findVehicleLogsByBrand(brand: String!): [VehicleLog]
+    findVehicleLogsByBrandAndVehicleType(brand: String!, vehicleType: String!): [VehicleLog]
+}

@@ -9,4 +9,8 @@ import java.util.List;
 @Repository
 public interface VehicleLogRepository extends JpaRepository<VehicleLog, Long> {
     List<VehicleLog> findByBrandAndVehicleType(String brand, VehicleLog.VehicleType vehicleType);
+
+    List<VehicleLog> findByVehicleType(VehicleLog.VehicleType vehicleType);
+
+    List<VehicleLog> findByBrand(String brand);
 }

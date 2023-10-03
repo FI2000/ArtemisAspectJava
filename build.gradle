@@ -31,13 +31,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-graphql'
 
     // MariaDB JDBC driver
     implementation 'org.mariadb.jdbc:mariadb-java-client'
 
     //Artemis
     implementation 'org.springframework.boot:spring-boot-starter-artemis'
-    
+
+    //GraphQL
+
     //Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
