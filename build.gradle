@@ -35,6 +35,9 @@ dependencies {
     // MariaDB JDBC driver
     implementation 'org.mariadb.jdbc:mariadb-java-client'
 
+    //Artemis
+    implementation 'org.springframework.boot:spring-boot-starter-artemis'
+    
     //Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

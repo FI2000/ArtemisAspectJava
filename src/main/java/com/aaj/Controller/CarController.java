@@ -1,24 +1,12 @@
 package com.aaj.Controller;
 
-import com.aaj.Persistence.Model.VehicleLog;
-import com.aaj.Persistence.VehicleLogRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/cars") // optional base route
+@RequestMapping("/api/cars")
 public class CarController {
-
-    @Autowired
-    private VehicleLogRepository vehicleLogRepository;
-
     @GetMapping("/lamborghini")
     public void lamborghini() {
         // Empty method
@@ -67,12 +55,6 @@ public class CarController {
     @GetMapping("/rollsRoyce")
     public void rollsRoyce() {
         // Empty method
-    }
-
-    @GetMapping()
-    public ResponseEntity<List<VehicleLog>> retrieveCars(@RequestParam String brand) {
-        List<VehicleLog> vehicleLogs = vehicleLogRepository.findByBrandAndVehicleType(brand, VehicleLog.VehicleType.CAR);
-        return new ResponseEntity<>(vehicleLogs, HttpStatus.OK);
     }
 
 }

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/trucks") // optional base route
+@RequestMapping("/api/trucks")
 public class TruckController {
 
     @GetMapping("/pickup")
@@ -57,4 +57,5 @@ public class TruckController {
     public void flatbed() {
         // Empty method
     }
+
 }
