@@ -17,7 +17,6 @@ public class VehicleLogQuery {
 
     @QueryMapping
     public List<VehicleLog> findAllVehicleLogs() {
-        System.out.println("Retrieving all vehicles for graphql");
         return vehicleLogRepository.findAll();
     }
 

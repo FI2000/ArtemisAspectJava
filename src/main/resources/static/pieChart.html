@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Pie Chart Display</title>
+    <!-- Include Chart.js and Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        #chartContainer {
+            width: var(--chart-width, 400px);  /* Default width */
+            height: var(--chart-height, 400px);  /* Default height */
+        }
+    </style>
+</head>
+<body>
+
+<div id="chartContainer">
+    <canvas id="pieChartCanvas"></canvas>
+</div>
+
+<script type="text/javascript">
+    // Variables to customize the chart size
+    var chartWidth = '600px';
+    var chartHeight = '600px';
+
+    // Apply the custom sizes to the chart container
+    document.getElementById('chartContainer').style.setProperty('--chart-width', chartWidth);
+    document.getElementById('chartContainer').style.setProperty('--chart-height', chartHeight);
+
+    function renderPieChart(data) {
+        const ctx = document.getElementById('pieChartCanvas').getContext('2d');
+        const labels = Object.keys(data);
+        const values = Object.values(data);
+        const total = values.reduce((acc, value) => acc + value, 0);  // Calculate the total count of vehicles
+
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(99, 132, 255, 0.2)',
+                        'rgba(245, 130, 48, 0.2)',
+                        'rgba(145, 30, 180, 0.2)',
+                        'rgba(70, 240, 240, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(99, 132, 255, 1)',
+                        'rgba(245, 130, 48, 1)',
+                        'rgba(145, 30, 180, 1)',
+                        'rgba(70, 240, 240, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,  // This will allow you to set a fixed height for the chart
+                aspectRatio: 1.4,  // Set this to adjust the size of the pie (lower value for smaller pie)
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const value = tooltipItem.raw;  // Get the value of the segment
+                                const percentage = ((value / total) * 100).toFixed(2);  // Calculate the percentage
+                                return `${tooltipItem.label}: ${value} (${percentage}%)`;  // Return the label with value and percentage
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Make GraphQL request for pie chart data
+    axios.post('/graphql', {
+        query: `
+            query {
+                findAllVehicleLogs {
+                    brand
+                }
+            }
+        `
+    }).then(response => {
+        const vehicleLogs = response.data.data.findAllVehicleLogs;
+        const brandCounts = vehicleLogs.reduce((acc, log) => {
+            acc[log.brand] = (acc[log.brand] || 0) + 1;
+            return acc;
+        }, {});
+        renderPieChart(brandCounts);
+    }).catch(error => {
+        console.error('Error fetching data:', error);
+    });
+</script>
+
+</body>
+</html>

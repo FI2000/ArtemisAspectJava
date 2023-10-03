@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Vehicle Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<input id="vehicleTypeFilter" oninput="filterData()" placeholder="Filter by vehicle type" type="text">
+
+<table id="data-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Vehicle Type</th>
+        <th>Brand</th>
+        <th>Purchase Date</th>
+        <th>Purchase Price</th>
+    </tr>
+    </thead>
+    <tbody id="table-body">
+    <!-- Data will be inserted here by JavaScript -->
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    let allData = [];
+
+    function loadAllData() {
+        axios.post('/graphql', {
+            query: `
+                query {
+                    findAllVehicleLogs {
+                        id
+                        vehicleType
+                        brand
+                        purchaseDate
+                        purchasePrice
+                    }
+                }
+            `
+        }).then(response => {
+            allData = response.data.data.findAllVehicleLogs;
+            displayData(allData);
+        }).catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    }
+
+    function displayData(data) {
+        const tableBody = document.getElementById('table-body');
+        tableBody.innerHTML = data.map(item => `
+            <tr>
+                <td>${item.id}</td>
+                <td>${item.vehicleType}</td>
+                <td>${item.brand}</td>
+                <td>${item.purchaseDate}</td>
+                <td>${item.purchasePrice}</td>
+            </tr>
+        `).join('');
+    }
+
+    function filterData() {
+        const filterValue = document.getElementById('vehicleTypeFilter').value.toLowerCase();
+        const filteredData = allData.filter(item => item.vehicleType.toLowerCase().includes(filterValue));
+        displayData(filteredData);
+    }
+
+    // Load all data on page load
+    window.onload = loadAllData;
+</script>
+
+</body>
+</html>
